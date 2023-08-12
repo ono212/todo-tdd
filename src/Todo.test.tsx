@@ -35,4 +35,19 @@ describe("Todo앱", () => {
       expect(item).toHaveAttribute("data-completed", "true");
     });
   });
+
+  it("버튼을 클릭하면 todo항목을 지운다.", async () => {
+    render(<Todo />);
+
+    const input = screen.getByTestId("todo-input");
+    userEvent.type(input, "우유 사기");
+    userEvent.type(input, "{enter}");
+
+    const item = screen.getByText("우유 사기");
+    expect(item).toBeInTheDocument();
+
+    const deleteButton = screen.getByTestId("delete-button");
+    userEvent.click(deleteButton);
+    expect(item).not.toBeInTheDocument();
+  });
 });
