@@ -20,4 +20,19 @@ describe("Todo앱", () => {
       expect(screen.getByText("우유 사기")).toBeInTheDocument();
     });
   });
+
+  it("todo항목을 클릭하면 완료 처리가 된다.", async () => {
+    render(<Todo />);
+
+    const input = screen.getByTestId("todo-input");
+    userEvent.type(input, "우유 사기");
+    userEvent.type(input, "{enter}");
+
+    const item = screen.getByText("우유 사기");
+    userEvent.click(item);
+
+    await waitFor(() => {
+      expect(item).toHaveAttribute("data-completed", "true");
+    });
+  });
 });
