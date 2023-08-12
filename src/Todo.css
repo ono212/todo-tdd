@@ -11,13 +11,22 @@
 }
 
 .todo-item {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.todo-item {
   background-color: #efefef;
   border: 1px solid #efefef;
   padding: 0.8rem 1rem;
   margin-bottom: 0.5rem;
 }
 
-.todo-item[data-completed="true"] {
+.todo-item span[data-completed="true"] {
   text-decoration: line-through;
   color: #999;
+}
+
+.todo-item button {
+  margin-left: auto;
 }
