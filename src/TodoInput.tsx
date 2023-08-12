@@ -16,12 +16,13 @@ export const TodoInput = ({
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       const id = uuid();
-      onItemAdded({ id, content });
+      onItemAdded({ id, content, completed: false });
     }
   };
 
   return (
     <input
+      className="todo-input"
       type="text"
       data-testid="todo-input"
       onChange={handleChange}
