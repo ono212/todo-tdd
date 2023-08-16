@@ -1,13 +1,26 @@
 import { useState } from "react";
 import { TodoType } from "./types";
 
-export const useTodos = () => {
-  const [todos, setTodos] = useState<TodoType[]>([]);
+export const useTodos = (items: TodoType[] = []) => {
+  const [todos, setTodos] = useState<TodoType[]>(items);
+  const [displayTodos, setDisplayTodos] = useState<TodoType[]>(items);
 
-  const addTodo = (todo: TodoType) => setTodos([...todos, todo]);
+  const addTodo = (todo: TodoType) => {
+    setTodos([...todos, todo]);
+    setDisplayTodos([...todos, todo]);
+  };
 
   const toggleTodo = (todo: TodoType) => {
     setTodos(
+      todos.map((item) => {
+        if (item.id === todo.id) {
+          return { ...item, completed: !item.completed };
+        }
+        return item;
+      })
+    );
+
+    setDisplayTodos(
       todos.map((item) => {
         if (item.id === todo.id) {
           return { ...item, completed: !item.completed };
@@ -19,12 +32,28 @@ export const useTodos = () => {
 
   const deleteTodo = (todo: TodoType) => {
     setTodos(todos.filter((item) => item.id !== todo.id));
+    setDisplayTodos(todos.filter((item) => item.id !== todo.id));
+  };
+
+  const filterCompletedTodos = () => {
+    setDisplayTodos(todos.filter((todo) => todo.completed));
+  };
+
+  const filterTotalTodos = () => {
+    setDisplayTodos(todos);
+  };
+
+  const filterActiveTodos = () => {
+    setDisplayTodos(todos.filter((todo) => !todo.completed));
   };
 
   return {
-    todos,
+    todos: displayTodos,
     addTodo,
     toggleTodo,
     deleteTodo,
+    filterCompletedTodos,
+    filterTotalTodos,
+    filterActiveTodos,
   };
 };

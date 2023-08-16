@@ -50,4 +50,121 @@ describe("Todo앱", () => {
     userEvent.click(deleteButton);
     expect(item).not.toBeInTheDocument();
   });
+
+  it("todo항목의 리스트를 렌더링한다.", () => {
+    const items = [
+      {
+        id: "1",
+        content: "감바스 만들 재료 사기",
+        completed: false,
+      },
+      {
+        id: "2",
+        content: "리액트 공부하기",
+        completed: true,
+      },
+      {
+        id: "3",
+        content: "옷 정리하기",
+        completed: false,
+      },
+    ];
+
+    render(<Todo items={items} />);
+    expect(screen.getByText("옷 정리하기")).toBeInTheDocument();
+  });
+
+  it("전체 항목 탭을 클릭하면 전체 항목들을 렌더링한다.", () => {
+    const items = [
+      {
+        id: "1",
+        content: "감바스 만들 재료 사기",
+        completed: false,
+      },
+      {
+        id: "2",
+        content: "리액트 공부하기",
+        completed: true,
+      },
+      {
+        id: "3",
+        content: "옷 정리하기",
+        completed: false,
+      },
+    ];
+
+    render(<Todo items={items} />);
+    const todoItems = screen.getAllByTestId("todo-item");
+    expect(todoItems.length).toEqual(items.length);
+
+    const completedTab = screen.getByTestId("todo-completed");
+    userEvent.click(completedTab);
+
+    expect(screen.getAllByTestId("todo-item").length).toEqual(1);
+    expect(screen.getByText("리액트 공부하기")).toBeInTheDocument();
+
+    const totalTab = screen.getByTestId("todo-total");
+    userEvent.click(totalTab);
+
+    expect(screen.getAllByTestId("todo-item").length).toEqual(3);
+  });
+
+  it("완료된 항목 탭을 클릭하면 완료된 항목들만 렌더링한다.", () => {
+    const items = [
+      {
+        id: "1",
+        content: "감바스 만들 재료 사기",
+        completed: false,
+      },
+      {
+        id: "2",
+        content: "리액트 공부하기",
+        completed: true,
+      },
+      {
+        id: "3",
+        content: "옷 정리하기",
+        completed: false,
+      },
+    ];
+
+    render(<Todo items={items} />);
+    const todoItems = screen.getAllByTestId("todo-item");
+    expect(todoItems.length).toEqual(items.length);
+
+    const completedTab = screen.getByTestId("todo-completed");
+    userEvent.click(completedTab);
+
+    expect(screen.getAllByTestId("todo-item").length).toEqual(1);
+    expect(screen.getByText("리액트 공부하기")).toBeInTheDocument();
+  });
+
+  it("완료 전 항목 탭을 클릭하면 아직 완료되지 않은 항목들만 렌더링한다.", () => {
+    const items = [
+      {
+        id: "1",
+        content: "감바스 만들 재료 사기",
+        completed: false,
+      },
+      {
+        id: "2",
+        content: "리액트 공부하기",
+        completed: true,
+      },
+      {
+        id: "3",
+        content: "옷 정리하기",
+        completed: false,
+      },
+    ];
+
+    render(<Todo items={items} />);
+    const todoItems = screen.getAllByTestId("todo-item");
+    expect(todoItems.length).toEqual(items.length);
+
+    const activeTab = screen.getByTestId("todo-active");
+    userEvent.click(activeTab);
+
+    expect(screen.getAllByTestId("todo-item").length).toEqual(2);
+  });
 });
