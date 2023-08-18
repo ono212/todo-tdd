@@ -7,7 +7,6 @@
   width: 100%;
   padding: 0.8rem 1rem;
   font-size: 1.2rem;
-  margin-bottom: 1rem;
 }
 
 .todo-item {
@@ -29,4 +28,10 @@
 
 .todo-item button {
   margin-left: auto;
+}
+
+.aggregation {
+  padding-block: 1rem;
+  display: flex;
+  gap: 0.5rem;
 }
