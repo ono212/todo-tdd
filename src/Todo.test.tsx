@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import { Todo } from "./Todo";
 import userEvent from "@testing-library/user-event";
 
@@ -166,5 +166,42 @@ describe("Todo앱", () => {
     userEvent.click(activeTab);
 
     expect(screen.getAllByTestId("todo-item").length).toEqual(2);
+  });
+
+  it("각 탭 별로 집계 숫자를 보여준다.", () => {
+    const items = [
+      {
+        id: "1",
+        content: "감바스 만들 재료 사기",
+        completed: false,
+      },
+      {
+        id: "2",
+        content: "리액트 공부하기",
+        completed: true,
+      },
+      {
+        id: "3",
+        content: "옷 정리하기",
+        completed: false,
+      },
+    ];
+
+    render(<Todo items={items} />);
+    const todoItems = screen.getAllByTestId("todo-item");
+    expect(todoItems.length).toEqual(items.length);
+
+    const totalTab = screen.getByTestId("todo-total");
+    userEvent.click(totalTab);
+
+    const activeTab = screen.getByTestId("todo-active");
+    userEvent.click(activeTab);
+
+    const completedTab = screen.getByTestId("todo-completed");
+    userEvent.click(completedTab);
+
+    expect(within(totalTab).getByText("3")).toBeInTheDocument();
+    expect(within(activeTab).getByText("2")).toBeInTheDocument();
+    expect(within(completedTab).getByText("1")).toBeInTheDocument();
   });
 });
