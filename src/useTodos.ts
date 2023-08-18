@@ -48,7 +48,7 @@ export const useTodos = (items: TodoType[] = []) => {
   return {
     displayTodos,
     aggregation,
-    setCategory,
+    switchCategory: setCategory,
     addTodo,
     toggleTodo,
     deleteTodo,
