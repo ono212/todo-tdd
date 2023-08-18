@@ -5,32 +5,28 @@ import { useTodos } from "./useTodos";
 import { TodoType } from "./types";
 
 const Todo = ({ items }: { items?: TodoType[] }) => {
-  const {
-    todos,
-    addTodo,
-    toggleTodo,
-    deleteTodo,
-    filterCompletedTodos,
-    filterTotalTodos,
-    filterActiveTodos,
-  } = useTodos(items);
+  const { displayTodos, setCategory, addTodo, toggleTodo, deleteTodo } =
+    useTodos(items);
   return (
     <div className="todo-container">
       <h2>todos</h2>
       <TodoInput onItemAdded={addTodo} />
       <div className="aggregation">
-        <button data-testid="todo-total" onClick={filterTotalTodos}>
+        <button data-testid="todo-total" onClick={() => setCategory("total")}>
           전체 항목
         </button>
-        <button data-testid="todo-completed" onClick={filterCompletedTodos}>
+        <button
+          data-testid="todo-completed"
+          onClick={() => setCategory("completed")}
+        >
           완료된 항목
         </button>
-        <button data-testid="todo-active" onClick={filterActiveTodos}>
+        <button data-testid="todo-active" onClick={() => setCategory("active")}>
           완료 전 항목
         </button>
       </div>
       <TodoList
-        todos={todos}
+        todos={displayTodos}
         onToggleItem={toggleTodo}
         onDeleteItem={deleteTodo}
       />
