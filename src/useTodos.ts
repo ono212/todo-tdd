@@ -5,26 +5,34 @@ export const useTodos = (items: TodoType[] = []) => {
   const [todos, setTodos] = useState<TodoType[]>(items);
   const [category, setCategory] = useState<string>("total");
 
+  const completed = useMemo(() => {
+    return todos.filter((todo) => todo.completed);
+  }, [todos]);
+
+  const active = useMemo(() => {
+    return todos.filter((todo) => !todo.completed);
+  }, [todos]);
+
   const displayTodos = useMemo(() => {
     switch (category) {
       case "total":
         return todos;
       case "completed":
-        return todos.filter((todo) => todo.completed);
+        return completed;
       case "active":
-        return todos.filter((todo) => !todo.completed);
+        return active;
       default:
         return todos;
     }
-  }, [category, todos]);
+  }, [active, category, completed, todos]);
 
   const aggregation = useMemo(() => {
     return {
       total: todos.length,
-      completed: todos.filter((todo) => todo.completed).length,
-      active: todos.filter((todo) => !todo.completed).length,
+      completed: completed.length,
+      active: active.length,
     };
-  }, [todos]);
+  }, [active.length, completed.length, todos.length]);
 
   const addTodo = (todo: TodoType) => {
     setTodos([...todos, todo]);
