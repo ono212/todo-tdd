@@ -152,4 +152,33 @@ describe("Todo앱", () => {
       expect(within(completedTab).getByText("1")).toBeInTheDocument();
     });
   });
+
+  describe("검색", () => {
+    it("키워드로 검색할 수 있다.", () => {
+      const items = [
+        {
+          id: "1",
+          content: "감바스 만들 재료 주문하기",
+          completed: false,
+        },
+        {
+          id: "2",
+          content: "리액트 공부하기",
+          completed: true,
+        },
+        {
+          id: "3",
+          content: "옷 주문하기",
+          completed: false,
+        },
+      ];
+
+      render(<Todo items={items} />);
+
+      const input = screen.getByTestId("search-input");
+      userEvent.type(input, "주문");
+
+      expect(screen.getAllByTestId("todo-item").length).toEqual(2);
+    });
+  });
 });

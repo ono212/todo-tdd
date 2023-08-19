@@ -4,6 +4,7 @@ import { TodoType } from "./types";
 export const useTodos = (items: TodoType[] = []) => {
   const [todos, setTodos] = useState<TodoType[]>(items);
   const [category, setCategory] = useState<string>("total");
+  const [query, setQuery] = useState<string>("");
 
   const completed = useMemo(() => {
     return todos.filter((todo) => todo.completed);
@@ -14,17 +15,23 @@ export const useTodos = (items: TodoType[] = []) => {
   }, [todos]);
 
   const displayTodos = useMemo(() => {
-    switch (category) {
-      case "total":
-        return todos;
-      case "completed":
-        return completed;
-      case "active":
-        return active;
-      default:
-        return todos;
+    function getDisplayTodos() {
+      switch (category) {
+        case "total":
+          return todos;
+        case "completed":
+          return completed;
+        case "active":
+          return active;
+        default:
+          return todos;
+      }
     }
-  }, [active, category, completed, todos]);
+
+    const items = getDisplayTodos();
+
+    return items.filter((item) => item.content.includes(query));
+  }, [active, category, completed, query, todos]);
 
   const aggregation = useMemo(() => {
     return {
@@ -53,6 +60,10 @@ export const useTodos = (items: TodoType[] = []) => {
     setTodos(todos.filter((item) => item.id !== todo.id));
   };
 
+  const search = (query: string) => {
+    setQuery(query);
+  };
+
   return {
     displayTodos,
     aggregation,
@@ -60,5 +71,6 @@ export const useTodos = (items: TodoType[] = []) => {
     addTodo,
     toggleTodo,
     deleteTodo,
+    search,
   };
 };
