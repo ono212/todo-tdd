@@ -27,6 +27,7 @@ export const TodoInput = ({
       data-testid="todo-input"
       onChange={handleChange}
       onKeyDown={handleKeyDown}
+      placeholder="할 일을 입력해주세요🤓."
     />
   );
 };

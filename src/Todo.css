@@ -7,6 +7,7 @@
   width: 100%;
   padding: 0.8rem 1rem;
   font-size: 1.2rem;
+  border-radius: 6px;
 }
 
 .todo-item {
@@ -19,6 +20,7 @@
   border: 1px solid #efefef;
   padding: 0.8rem 1rem;
   margin-bottom: 0.5rem;
+  border-radius: 6px;
 }
 
 .todo-item span[data-completed="true"] {

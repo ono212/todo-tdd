@@ -6,7 +6,7 @@ describe("Todo앱", () => {
   it("제목이 보여야한다.", () => {
     render(<Todo />);
 
-    expect(screen.getByText("todos")).toBeInTheDocument();
+    expect(screen.getByText("할 일 목록🚩")).toBeInTheDocument();
   });
 
   it("리스트에 todo아이템을 추가한다.", async () => {

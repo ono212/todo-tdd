@@ -15,6 +15,7 @@ export const SearchBox = ({
       type="text"
       data-testid="search-input"
       onChange={handleChange}
+      placeholder="검색할 키워드를 입력해주세요🔎."
     />
   );
 };

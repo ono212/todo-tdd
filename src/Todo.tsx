@@ -19,7 +19,7 @@ const Todo = ({ items }: { items?: TodoType[] }) => {
 
   return (
     <div className="todo-container">
-      <h2>todos</h2>
+      <h1>할 일 목록🚩</h1>
       <TodoInput onItemAdded={addTodo} />
       <Aggregation aggregation={aggregation} switchCategory={switchCategory} />
       <TodoList
