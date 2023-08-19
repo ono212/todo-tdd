@@ -74,7 +74,7 @@ describe("Todo앱", () => {
     expect(screen.getByText("옷 정리하기")).toBeInTheDocument();
   });
 
-  it("전체 항목 탭을 클릭하면 전체 항목들을 렌더링한다.", () => {
+  describe("집계 탭들", () => {
     const items = [
       {
         id: "1",
@@ -93,115 +93,63 @@ describe("Todo앱", () => {
       },
     ];
 
-    render(<Todo items={items} />);
-    const todoItems = screen.getAllByTestId("todo-item");
-    expect(todoItems.length).toEqual(items.length);
+    it("전체 항목 탭을 클릭하면 전체 항목들을 렌더링한다.", () => {
+      render(<Todo items={items} />);
+      const todoItems = screen.getAllByTestId("todo-item");
+      expect(todoItems.length).toEqual(items.length);
 
-    const completedTab = screen.getByTestId("todo-completed");
-    userEvent.click(completedTab);
+      const completedTab = screen.getByTestId("todo-completed");
+      userEvent.click(completedTab);
 
-    expect(screen.getAllByTestId("todo-item").length).toEqual(1);
-    expect(screen.getByText("리액트 공부하기")).toBeInTheDocument();
+      expect(screen.getAllByTestId("todo-item").length).toEqual(1);
+      expect(screen.getByText("리액트 공부하기")).toBeInTheDocument();
 
-    const totalTab = screen.getByTestId("todo-total");
-    userEvent.click(totalTab);
+      const totalTab = screen.getByTestId("todo-total");
+      userEvent.click(totalTab);
 
-    expect(screen.getAllByTestId("todo-item").length).toEqual(3);
-  });
+      expect(screen.getAllByTestId("todo-item").length).toEqual(3);
+    });
 
-  it("완료된 항목 탭을 클릭하면 완료된 항목들만 렌더링한다.", () => {
-    const items = [
-      {
-        id: "1",
-        content: "감바스 만들 재료 사기",
-        completed: false,
-      },
-      {
-        id: "2",
-        content: "리액트 공부하기",
-        completed: true,
-      },
-      {
-        id: "3",
-        content: "옷 정리하기",
-        completed: false,
-      },
-    ];
+    it("완료된 항목 탭을 클릭하면 완료된 항목들만 렌더링한다.", () => {
+      render(<Todo items={items} />);
+      const todoItems = screen.getAllByTestId("todo-item");
+      expect(todoItems.length).toEqual(items.length);
 
-    render(<Todo items={items} />);
-    const todoItems = screen.getAllByTestId("todo-item");
-    expect(todoItems.length).toEqual(items.length);
+      const completedTab = screen.getByTestId("todo-completed");
+      userEvent.click(completedTab);
 
-    const completedTab = screen.getByTestId("todo-completed");
-    userEvent.click(completedTab);
+      expect(screen.getAllByTestId("todo-item").length).toEqual(1);
+      expect(screen.getByText("리액트 공부하기")).toBeInTheDocument();
+    });
 
-    expect(screen.getAllByTestId("todo-item").length).toEqual(1);
-    expect(screen.getByText("리액트 공부하기")).toBeInTheDocument();
-  });
+    it("완료 전 항목 탭을 클릭하면 아직 완료되지 않은 항목들만 렌더링한다.", () => {
+      render(<Todo items={items} />);
+      const todoItems = screen.getAllByTestId("todo-item");
+      expect(todoItems.length).toEqual(items.length);
 
-  it("완료 전 항목 탭을 클릭하면 아직 완료되지 않은 항목들만 렌더링한다.", () => {
-    const items = [
-      {
-        id: "1",
-        content: "감바스 만들 재료 사기",
-        completed: false,
-      },
-      {
-        id: "2",
-        content: "리액트 공부하기",
-        completed: true,
-      },
-      {
-        id: "3",
-        content: "옷 정리하기",
-        completed: false,
-      },
-    ];
+      const activeTab = screen.getByTestId("todo-active");
+      userEvent.click(activeTab);
 
-    render(<Todo items={items} />);
-    const todoItems = screen.getAllByTestId("todo-item");
-    expect(todoItems.length).toEqual(items.length);
+      expect(screen.getAllByTestId("todo-item").length).toEqual(2);
+    });
 
-    const activeTab = screen.getByTestId("todo-active");
-    userEvent.click(activeTab);
+    it("각 탭 별로 집계 숫자를 보여준다.", () => {
+      render(<Todo items={items} />);
+      const todoItems = screen.getAllByTestId("todo-item");
+      expect(todoItems.length).toEqual(items.length);
 
-    expect(screen.getAllByTestId("todo-item").length).toEqual(2);
-  });
+      const totalTab = screen.getByTestId("todo-total");
+      userEvent.click(totalTab);
 
-  it("각 탭 별로 집계 숫자를 보여준다.", () => {
-    const items = [
-      {
-        id: "1",
-        content: "감바스 만들 재료 사기",
-        completed: false,
-      },
-      {
-        id: "2",
-        content: "리액트 공부하기",
-        completed: true,
-      },
-      {
-        id: "3",
-        content: "옷 정리하기",
-        completed: false,
-      },
-    ];
+      const activeTab = screen.getByTestId("todo-active");
+      userEvent.click(activeTab);
 
-    render(<Todo items={items} />);
-    const todoItems = screen.getAllByTestId("todo-item");
-    expect(todoItems.length).toEqual(items.length);
+      const completedTab = screen.getByTestId("todo-completed");
+      userEvent.click(completedTab);
 
-    const totalTab = screen.getByTestId("todo-total");
-    userEvent.click(totalTab);
-
-    const activeTab = screen.getByTestId("todo-active");
-    userEvent.click(activeTab);
-
-    const completedTab = screen.getByTestId("todo-completed");
-    userEvent.click(completedTab);
-
-    expect(within(totalTab).getByText("3")).toBeInTheDocument();
-    expect(within(activeTab).getByText("2")).toBeInTheDocument();
-    expect(within(completedTab).getByText("1")).toBeInTheDocument();
+      expect(within(totalTab).getByText("3")).toBeInTheDocument();
+      expect(within(activeTab).getByText("2")).toBeInTheDocument();
+      expect(within(completedTab).getByText("1")).toBeInTheDocument();
+    });
   });
 });
