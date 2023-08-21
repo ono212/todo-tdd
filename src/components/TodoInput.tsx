@@ -4,8 +4,8 @@ import {
   useState,
 } from "react";
 import { v4 as uuid } from "uuid";
-import { TodoType } from "./types";
-import { useControlAndKey } from "./useControlAndKey";
+import { TodoType } from "../types";
+import { useControlAndKey } from "../hooks/useControlAndKey";
 
 export const TodoInput = ({
   onItemAdded,

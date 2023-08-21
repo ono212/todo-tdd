@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import { useControlAndKey } from "./useControlAndKey";
+import { useControlAndKey } from "../hooks/useControlAndKey";
 
 export const SearchInput = ({
   performSearch,

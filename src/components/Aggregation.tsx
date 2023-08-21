@@ -1,4 +1,4 @@
-import { AggregationType } from "./types";
+import { AggregationType } from "../types";
 import { Category } from "./Category";
 
 export const Aggregation = ({
