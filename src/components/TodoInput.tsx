@@ -24,6 +24,7 @@ export const TodoInput = ({
     if (e.key === "Enter") {
       const id = uuid();
       onItemAdded({ id, content, completed: false });
+      setContent("");
     }
   };
 
@@ -36,6 +37,7 @@ export const TodoInput = ({
       onChange={handleChange}
       onKeyDown={handleKeyDown}
       placeholder="할 일을 입력해주세요🤓"
+      value={content}
     />
   );
 };
