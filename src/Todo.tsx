@@ -4,7 +4,7 @@ import "./Todo.css";
 import { useTodos } from "./useTodos";
 import { TodoType } from "./types";
 import { Aggregation } from "./Aggregation";
-import { SearchBox } from "./SearchBox";
+import { SearchInput } from "./SearchInput";
 
 const Todo = ({ items }: { items?: TodoType[] }) => {
   const {
@@ -27,7 +27,7 @@ const Todo = ({ items }: { items?: TodoType[] }) => {
         onToggleItem={toggleTodo}
         onDeleteItem={deleteTodo}
       />
-      <SearchBox performSearch={search} />
+      <SearchInput performSearch={search} />
     </div>
   );
 };
