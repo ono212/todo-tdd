@@ -28,8 +28,10 @@
   color: #999;
 }
 
-.todo-item button {
+.todo-item .todo-buttons {
   margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
 }
 
 .aggregation {
