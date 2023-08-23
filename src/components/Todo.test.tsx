@@ -36,7 +36,7 @@ describe("Todo앱", () => {
     });
   });
 
-  it("버튼을 클릭하면 todo항목을 지운다.", async () => {
+  it("삭제버튼을 클릭하면 todo항목을 지운다.", async () => {
     render(<Todo />);
 
     const input = screen.getByTestId("todo-input");
@@ -179,6 +179,32 @@ describe("Todo앱", () => {
       userEvent.type(input, "주문");
 
       expect(screen.getAllByTestId("todo-item").length).toEqual(2);
+    });
+  });
+
+  describe("todo 항목 편집", () => {
+    it("편집 버튼을 클릭하면 todo항목이 input창으로 변한다.", () => {
+      render(
+        <Todo
+          items={[
+            {
+              id: "1",
+              content: "우유 사기",
+              completed: false,
+            },
+          ]}
+        />
+      );
+
+      const editButton = screen.getByTestId("edit-button");
+      userEvent.click(editButton);
+
+      const editInput = screen.getByTestId("edit-input");
+
+      expect(editInput).toBeInTheDocument();
+      userEvent.type(editInput, "{enter}");
+
+      expect(editInput).not.toBeInTheDocument();
     });
   });
 });
