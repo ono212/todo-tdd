@@ -64,6 +64,17 @@ export const useTodos = (items: TodoType[] = []) => {
     setQuery(query);
   };
 
+  const editTodo = (todo: TodoType) => {
+    setTodos(
+      todos.map((item) => {
+        if (item.id === todo.id) {
+          return { ...item, content: todo.content };
+        }
+        return item;
+      })
+    );
+  };
+
   return {
     displayTodos,
     aggregation,
@@ -72,5 +83,6 @@ export const useTodos = (items: TodoType[] = []) => {
     toggleTodo,
     deleteTodo,
     search,
+    editTodo,
   };
 };

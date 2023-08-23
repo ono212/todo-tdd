@@ -15,6 +15,7 @@ const Todo = ({ items }: { items?: TodoType[] }) => {
     toggleTodo,
     deleteTodo,
     search,
+    editTodo,
   } = useTodos(items);
 
   return (
@@ -26,6 +27,7 @@ const Todo = ({ items }: { items?: TodoType[] }) => {
         todos={displayTodos}
         onToggleItem={toggleTodo}
         onDeleteItem={deleteTodo}
+        onEditItem={editTodo}
       />
       <SearchInput performSearch={search} />
     </div>
